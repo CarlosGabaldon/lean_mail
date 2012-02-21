@@ -1,0 +1,41 @@
+= Lean Mail
+
+  Email client that uses Lean Software Development practices and GTD to manage email overload.
+
+  Copyright (c) 2012 Carlos Gabaldon <carlosgabaldon.com>, released under the MIT license
+ 
+  project page: http://github.com/CarlosGabaldon/lean_mail/
+  project repo: git://github.com/CarlosGabaldon/lean_mail.git
+ 
+  Lean Mail Client:
+  SQLite:     http://www.sqlite.org/
+  Tornado:    http://www.tornadoweb.org/
+              http://carlosgabaldon.com/articles/storm-chasing-tornado/
+  
+
+= SET UP
+
+== TORNADO
+
+   $ sudo apt-get install git
+   $ git clone https://github.com/facebook/tornado.git
+   $ cd ./tornado/
+   $ python setup.py build
+   $ sudo python setup.py install
+
+== SQLITE 
+  $ wget http://www.sqlite.org/sqlite-3.5.4.tar.gz
+  $ tar xvfz sqlite-3.5.4.tar.gz
+  $ cd sqlite-3.5.4
+  $ ./configure --prefix=/usr/local
+  $ make
+  $ sudo make install
+
+= RUN
+
+  $ cd lean_mail
+  $ python handlers.py
+
+
+
+

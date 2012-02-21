@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+  {% for item in items %}
+    {{ modules.Item(item) }}
+  {% end %}
+  
+{% end %}
