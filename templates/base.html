@@ -1,20 +1,74 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-    <title></title>
-    <link rel="stylesheet" href="/static/default.css" type="text/css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/static/default.css" type="text/css">
     {% block head %}{% end %}
+    <title>Lean Mail</title>
+    <!--[if lt IE 9]>
+    <script type="text/javascript">
+      document.createElement("nav");
+      document.createElement("header");
+      document.createElement("footer");
+      document.createElement("section");
+      document.createElement("aside");
+      document.createElement("article");
+    </script>
+    <![endif]-->
   </head>
   <body>
-    <div id="body">
-      <div id="header">
-        <div style="float:right">
-        </div>
-        <h1>GTD</h1>
-      </div>
-      <div id="content">{% block body %}{% end %}</div>
-    </div>
-    {% block bottom %}{% end %}
+    
+    <header id="page_header">
+      <h1>Lean Mail</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Latest Posts</a></li>
+          <li><a href="archives">Archives</a></li>
+          <li><a href="contributors">Contributors</a></li>
+          <li><a href="contact">Contact Us</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <section id="posts">
+      {% block body %}{% end %}
+    </section>
+    
+    <section id="sidebar">
+      <nav>
+        <h3>Done</h3>
+        <ul>
+          <li><a href="2011/03">March 2011</a></li>
+          <li><a href="2011/02">February 2011</a></li>
+          <li><a href="2011/01">January 2011</a></li>
+          <li><a href="2010/12">December 2010</a></li>
+          <li><a href="2010/11">November 2010</a></li>
+          <li><a href="2010/10">October 2010</a></li>
+          <li><a href="2010/09">September 2010</a></li>
+          <li><a href="2010/08">August 2010</a></li>
+          <li><a href="2010/07">July 2010</a></li>
+          <li><a href="2010/06">June 2010</a></li>
+          <li><a href="2010/05">May 2010</a></li>
+          <li><a href="2010/04">April 2010</a></li>
+          <li><a href="2010/03">March 2010</a></li>
+          <li><a href="2010/02">February 2010</a></li>
+          <li><a href="2010/01">January 2010</a></li>
+        </ul>
+      </nav>
+    </section>
+    
+    <footer id="page_footer">
+      <p>&copy; 2011 Carlos Gabaldon</p>
+      {% block bottom %}{% end %}
+      <nav>
+        <ul>
+          <li><a href="http://carlosgabaldon.com">Home</a></li>
+          <li><a href="about">About</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </footer>
+    
   </body>
 </html>

@@ -13,19 +13,28 @@ http://0.0.0.0:8888/
 
 """
 import os.path
+from datetime import datetime
 import tornado.ioloop
 import tornado.web
 import tornado.httpserver
+
 
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
 
 class Item(object):
-    """Item item"""
-    def __init__(self, title, msg):
+    """Item"""
+    def __init__(self, title, content, 
+                 ancillary_content = None, author="anonymous", posted_on = datetime.now()):
         self.title = title
-        self.msg = msg
+        self.content = content
+        self.ancillary_content = ancillary_content
+        self.author = author
+        self.posted_on = posted_on
+
+    def posted_on_friendly(self):
+        return self.posted_on.strftime('%m/%d/%Y')
         
 class Application(tornado.web.Application):
     def __init__(self):
@@ -43,14 +52,14 @@ class Application(tornado.web.Application):
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        items = [Item(title="Weekly status", 
-                      msg="This is the weekly status"),
-                 Item(title="Team Meeting", 
-                      msg="This is about the meeting"),
-                 Item(title="Reboot Servers", 
-                      msg="This is spam"),
-                 Item(title="Spam", 
-                      msg="More spam")]
+        items = [Item(title ="Html 5 Rocks", 
+                      content="I love it..", 
+                      author="Carlos"),
+                 Item(title ="CSS3 and you", 
+                      content="How to start..",
+                      ancillary_content="CSS is Magic!"),
+                 Item(title ="JavaScript Today", 
+                      content="Modern JavaScript is ..")]
         
         self.render("home.html", items=items)
 
