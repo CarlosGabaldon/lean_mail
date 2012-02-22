@@ -1,10 +1,22 @@
 #!/usr/bin/env python
-# encoding: utf-8
+#
+# Copyright 2012 Carlos Gabaldon
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
 """
-gtd.py
+handlers.py
 
 Created by Carlos Gabaldon on 2012-02-14.
-Copyright (c) 2012 __yellowshovel__. All rights reserved.
 
 [~/Projects/gtd] ➔ python gtd.py
 
@@ -13,28 +25,15 @@ http://0.0.0.0:8888/
 
 """
 import os.path
-from datetime import datetime
 import tornado.ioloop
 import tornado.web
 import tornado.httpserver
+import models
 
 
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
-
-class Item(object):
-    """Item"""
-    def __init__(self, title, content, 
-                 ancillary_content = None, author="anonymous", posted_on = datetime.now()):
-        self.title = title
-        self.content = content
-        self.ancillary_content = ancillary_content
-        self.author = author
-        self.posted_on = posted_on
-
-    def posted_on_friendly(self):
-        return self.posted_on.strftime('%m/%d/%Y')
         
 class Application(tornado.web.Application):
     def __init__(self):
@@ -52,13 +51,13 @@ class Application(tornado.web.Application):
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        items = [Item(title ="Html 5 Rocks", 
+        items = [models.Item(title ="Html 5 Rocks", 
                       content="I love it..", 
                       author="Carlos"),
-                 Item(title ="CSS3 and you", 
+                 models.Item(title ="CSS3 and you", 
                       content="How to start..",
                       ancillary_content="CSS is Magic!"),
-                 Item(title ="JavaScript Today", 
+                 models.Item(title ="JavaScript Today", 
                       content="Modern JavaScript is ..")]
         
         self.render("home.html", items=items)
