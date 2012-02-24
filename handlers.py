@@ -13,17 +13,18 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+
 """
 handlers.py
 
 Created by Carlos Gabaldon on 2012-02-14.
 
-[~/Projects/gtd] ➔ python gtd.py
-
-...
+$ python handlers.py
 http://0.0.0.0:8888/
 
 """
+
+
 import os.path
 import tornado.ioloop
 import tornado.web

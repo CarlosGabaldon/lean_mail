@@ -1,17 +1,10 @@
-<article class="post">
+<article>
   <header>
     <h2>{{item.title}}</h2>
     <p>Posted by {{item.author}} on
       <time datetime="{{item.posted_on}}">{{item.posted_on_friendly}}</time>
     </p>
   </header>
-  {% if item.ancillary_content != None %}
-  <aside>
-   <p>
-     {{item.ancillary_content}}
-   </p>
-  </aside>
-  {% end %}
   <p>
    {{item.content}}
   </p>

@@ -1,9 +1,53 @@
 {% extends "base.html" %}
 
-{% block body %}
+{% block header %}
+  <h1>Lean Mail</h1>
+	<ul>
+		<li><a href="/action" class="active"><span>Action</span></a></li>
+		<li><a href="/hold"><span>Hold</span></a></li>
+		<li><a href="/done"><span>Done</span></a></li>
+	</ul>
+{% end %}
+
+
+{% block inbox %}
   <h3>Inbox</h3>
   {% for item in items %}
     {{ modules.Item(item) }}
   {% end %}
-  
 {% end %}
+
+{% block action %}
+  <h3>Action</h3>
+  {% for item in items %}
+    {{ modules.Item(item) }}
+  {% end %}
+{% end %}
+
+
+{% block hold %}
+  <h3>Hold</h3>
+  {% for item in items %}
+    {{ modules.Item(item) }}
+  {% end %}
+{% end %}
+
+{% block done %}
+  <h3>Done</h3>
+  {% for item in items %}
+    {{ modules.Item(item) }}
+  {% end %}
+{% end %}
+
+
+{% block footer %}
+  <p>2012 Carlos Gabaldon
+  <ul>
+    <li><a href="http://carlosgabaldon.com">Home</a></li>
+    <li><a href="about">About</a></li>
+    <li><a href="terms.html">Terms of Service</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+  </ul>
+  </p>
+{% end %}
+
