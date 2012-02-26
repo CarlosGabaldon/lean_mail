@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block header %}
-  <h1>Lean Mail</h1>
+  <h1>Kanban Mail</h1>
 	<ul>
 		<li><a href="/action" class="active"><span>Action</span></a></li>
 		<li><a href="/hold"><span>Hold</span></a></li>
@@ -11,30 +11,30 @@
 
 
 {% block inbox %}
-  <h3>Inbox</h3>
-  {% for item in items %}
+  <h3>Inbox ({{ len(inbox_items) }})</h3>
+  {% for item in inbox_items %}
     {{ modules.Item(item) }}
   {% end %}
 {% end %}
 
 {% block action %}
-  <h3>Action</h3>
-  {% for item in items %}
+  <h3>Action ({{ len(hold_items) }})</h3>
+  {% for item in hold_items %}
     {{ modules.Item(item) }}
   {% end %}
 {% end %}
 
 
 {% block hold %}
-  <h3>Hold</h3>
-  {% for item in items %}
+  <h3>Hold ({{ len(hold_items) }})</h3>
+  {% for item in hold_items %}
     {{ modules.Item(item) }}
   {% end %}
 {% end %}
 
 {% block done %}
-  <h3>Done</h3>
-  {% for item in items %}
+  <h3>Done ({{ len(completed_items) }})</h3>
+  {% for item in completed_items %}
     {{ modules.Item(item) }}
   {% end %}
 {% end %}

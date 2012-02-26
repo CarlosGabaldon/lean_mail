@@ -47,21 +47,22 @@ class Application(tornado.web.Application):
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             ui_modules={"Item": ItemModule},
             autoescape=None,
+            debug=True,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        items = [models.Item(title ="Html 5 Rocks", 
-                      content="I love it..", 
-                      author="Carlos"),
-                 models.Item(title ="CSS3 and you", 
-                      content="How to start..",
-                      ancillary_content="CSS is Magic!"),
-                 models.Item(title ="JavaScript Today", 
-                      content="Modern JavaScript is ..")]
+        inbox_items = models.Item.find_all_new()
+        action_items = models.Item.find_all_action()
+        hold_items = models.Item.find_all_hold()
+        completed_items = models.Item.find_all_completed()
         
-        self.render("home.html", items=items)
+        self.render("home.html", 
+                    inbox_items=inbox_items,
+                    action_items=action_items,
+                    hold_items=hold_items,
+                    completed_items=completed_items)
 
 class ItemModule(tornado.web.UIModule):
     def render(self, item):
