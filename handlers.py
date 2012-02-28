@@ -23,33 +23,20 @@ $ python handlers.py
 http://0.0.0.0:8888/
 
 """
-
-
-import os.path
 import tornado.ioloop
 import tornado.web
 import tornado.httpserver
 import models
+import app
+import urls
 
 
-from tornado.options import define, options
-
-define("port", default=8888, help="run on the given port", type=int)
+from tornado.options import options
         
 class Application(tornado.web.Application):
     def __init__(self):
-        handlers = [
-            (r"/", MainHandler),
-        ]
-        
-        settings = dict(
-            template_path=os.path.join(os.path.dirname(__file__), "templates"),
-            static_path=os.path.join(os.path.dirname(__file__), "static"),
-            ui_modules={"Item": ItemModule},
-            autoescape=None,
-            debug=True,
-        )
-        tornado.web.Application.__init__(self, handlers, **settings)
+
+        tornado.web.Application.__init__(self, urls.handlers, **app.settings)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -63,10 +50,6 @@ class MainHandler(tornado.web.RequestHandler):
                     action_items=action_items,
                     hold_items=hold_items,
                     completed_items=completed_items)
-
-class ItemModule(tornado.web.UIModule):
-    def render(self, item):
-        return self.render_string("modules/item.html", item=item)
 
 
 def main():

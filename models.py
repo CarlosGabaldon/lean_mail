@@ -26,20 +26,18 @@ class Item(object):
     """Item"""
     def __init__(self, kind,
                  message,
-                 related_messages = None, 
-                 created_on = datetime.now(), 
-                 last_touched_on = datetime.now()):
+                 related_messages = None):
         self.kind = kind
         self.message = message
         self.related_messages = related_messages
-        self.created_on = created_on
-        self.last_touched_on = last_touched_on
+        #self.created_at = created_at
+        #self.updated_at = updated_at
 
-    def created_on_friendly(self):
-        return self.created_on.strftime('%m/%d/%Y')
+    def created_at_friendly(self):
+        return self.created_at.strftime('%m/%d/%Y')
         
-    def last_toched_on_friendly(self):
-        return self.created_on.strftime('%m/%d/%Y')
+    def updated_at_friendly(self):
+        return self.updated_at.strftime('%m/%d/%Y')
         
     @classmethod
     def find_all_new(cls):
@@ -154,6 +152,8 @@ class Message(object):
         self.bc = bc
         self.headers = headers
         self.sent_on = sent_on
+        #self.created_at = created_at
+        #self.updated_at = updated_at
         
     def sent_on_friendly(self):
         return self.sent_on.strftime('%m/%d/%Y')
