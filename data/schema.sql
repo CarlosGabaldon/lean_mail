@@ -1,6 +1,6 @@
 # $ mysql -u root < schema.sql
 
-drop database if exists kanban_mail;
+drop database if exists lean_mail;
 create database lean_mail;
 use lean_mail;
 
@@ -21,7 +21,7 @@ CREATE TABLE message (
   cc VARCHAR(500),
   bc VARCHAR(500),
   headers VARCHAR(500),
-  sent_on TIMESTAMP,
+  sent_on DATETIME DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT NULL
 );
