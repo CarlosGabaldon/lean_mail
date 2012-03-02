@@ -21,17 +21,37 @@ Created by Carlos Gabaldon on 2012-02-21.
 """
 
 from datetime import datetime
+import MySQLdb
 
-class Item(object):
+class Model(object):
+    
+    def execute_query(sql):
+        try:
+            db = MySQLdb.connect("localhost","root","","Glaze" )
+            cursor = db.cursor()
+            cursor.execute(sql)
+            return cursor.fetchall()
+
+        except Exception, e: # in 3.1; except Exception as e:
+            print e
+
+        db.close()
+
+
+
+class Item(Model):
     """Item"""
-    def __init__(self, kind,
+    def __init__(self, id, kind,
+                 created_at,
+                 updated_at,
                  message,
                  related_messages = None):
+        self.id = id,
         self.kind = kind
         self.message = message
         self.related_messages = related_messages
-        #self.created_at = created_at
-        #self.updated_at = updated_at
+        self.created_at = created_at
+        self.updated_at = updated_at
 
     def created_at_friendly(self):
         return self.created_at.strftime('%m/%d/%Y')
@@ -41,29 +61,48 @@ class Item(object):
         
     @classmethod
     def find_all_new(cls):
-        m1 = Message(sender="Mint.com",
-                    subject="Your tax refund has arrived.",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m2 = Message(sender="Dwell",
-                    subject="This week from Dwell.",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m3 = Message(sender="Amazon.com",
-                    subject="Amazon Instant Video: New Releases and the Weekend Movie Sale",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m4 = Message(sender="Warby Parker",
-                    subject="Your Warby Parker order no. 100194087 has been received and will ship out shortly",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-                    
-        items = [ Item(kind="New",message=m1),
-                  Item(kind="New",message=m2),
-                  Item(kind="New",message=m3),
-                  Item(kind="New",message=m4) ]
+        sql = """select item.id, 
+                        item.kind, 
+                        item.created_at,
+                        item.updated_at,
+                        message.id as message_id,
+                        message.sender as message_sender, 
+                        message.sent_to as message_sent_to,
+                        message.subject as message_subject,
+                        message.body as message_body,
+                        message.sent_on as sent_on,
+                        message.created_at as message_created_at,
+                        message.updated_at as message_updated_at,
+                        message.cc as message_cc,
+                        message.bc as message_bc,
+                        message.headers as message_headers
+                FROM item 
+                INNER JOIN  message ON item.id = message.item_id 
+                WHERE item.kind = 'New'
+                ORDER BY item.updated_at;"""
+                
+        items = []
+        results = self.execute_query(sql=sql)
+        for col in results:
+            item = Item(id=col[0], 
+                        kind=col[1],
+                        created_at=col[2],
+                        updated_at=col[3],
+                        message= Message(id=col[4],
+                                         sender=col[5],
+                                         to=col[6],
+                                         subject=col[7],
+                                         body=col[8],
+                                         sent_on=col[9],
+                                         created_at=col[10],
+                                         updated_at=col[11],
+                                         cc=col[12],
+                                         bc=col[13],
+                                         headers=col[14]))
+            items.append(item)
         
         return items
+        
         
     @classmethod
     def find_all_action(cls):
@@ -137,28 +176,34 @@ class Item(object):
 
         
         
-class Message(object):
+class Message(Model):
     """Message"""
-    def __init__(self, sender,
-                subject, to, body,
-                cc=None, bc=None,
-                headers=None, 
-                sent_on=datetime.now()):
+    def __init__(self, 
+                id,
+                sender,
+                to, 
+                subject, 
+                body,
+                sent_on,
+                created_at,
+                updated_at,
+                cc=None, 
+                bc=None,
+                headers=None):
+        self.id = id
         self.sender = sender
-        self.subject = subject
         self.to = to
+        self.subject = subject
         self.body = body
+        self.sent_on = sent_on
+        self.created_at = created_at
+        self.updated_at = updated_at
         self.cc = cc
         self.bc = bc
         self.headers = headers
-        self.sent_on = sent_on
-        #self.created_at = created_at
-        #self.updated_at = updated_at
         
     def sent_on_friendly(self):
         return self.sent_on.strftime('%m/%d/%Y')
-
-
 
 
 
