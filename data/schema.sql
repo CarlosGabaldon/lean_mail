@@ -28,8 +28,6 @@ CREATE TABLE message (
   
 );
 
-  
-
 
 # Add item 1
 INSERT INTO item (kind)
@@ -38,7 +36,8 @@ VALUES ("New");
 
 # Add message 1
 INSERT INTO message(item_id, sender, sent_to, subject, body, cc, bc, headers, sent_on)
-VALUES(LAST_INSERT_ID(), "Mint.com", "cgabaldon@gmail.com" "Your tax refund has arrived.", "Body..", "", "", "", NOW())
+VALUES(LAST_INSERT_ID(), "Mint.com", "cgabaldon@gmail.com", "Your tax refund has arrived.", "Body..", "", "", "", NOW())
+
 
 # Add item 2
 INSERT INTO item (kind)
@@ -46,7 +45,7 @@ VALUES ("New");
 
 # Add message 2
 INSERT INTO message(item_id, sender, sent_to, subject, body, cc, bc, headers, sent_on)
-VALUES(LAST_INSERT_ID(), "Dwell", "cgabaldon@gmail.com" "This week from Dwell.", "Body..", "", "", "", NOW())
+VALUES(LAST_INSERT_ID(), "Dwell", "cgabaldon@gmail.com", "This week from Dwell.", "Body..", "", "", "", NOW())
 
 # Add item 3
 INSERT INTO item (kind)
@@ -54,7 +53,7 @@ VALUES ("New");
 
 # Add message 3
 INSERT INTO message(item_id, sender, sent_to, subject, body, cc, bc, headers, sent_on)
-VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com" "Amazon Instant Video: New Releases and the Weekend Movie Sale", "Body..", "", "", "",  NOW())
+VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com", "Amazon Instant Video: New Releases and the Weekend Movie Sale", "Body..", "", "", "",  NOW())
 
 # Add item 4
 INSERT INTO item (kind)
@@ -62,5 +61,5 @@ VALUES ("New");
 
 # Add message 4
 INSERT INTO message(item_id, sender, sent_to, subject, body, cc, bc, headers, sent_on)
-VALUES(LAST_INSERT_ID(), "Warby Parker", "cgabaldon@gmail.com" "Your Warby Parker order no. 100194087 has been received and will ship out shortly", "Body..", "", "", "", NOW())
+VALUES(LAST_INSERT_ID(), "Warby Parker", "cgabaldon@gmail.com", "Your Warby Parker order no. 100194087 has been received and will ship out shortly", "Body..", "", "", "", NOW())
 
