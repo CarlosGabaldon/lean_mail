@@ -57,7 +57,7 @@ class Item(object):
             self.updated_at = updated_at
     
     @classmethod
-    def create_from_DB_record(cls, record):
+    def create_from_db_record(cls, record):
         return Item(id=record[0], 
                     kind=record[1],
                     created_at=record[2],
@@ -74,6 +74,14 @@ class Item(object):
                                      bc=record[13],
                                      headers=record[14]))
 
+    @classmethod
+    def create_from_db_results(cls, results):
+        items = []
+        for record in results:
+            item = Item.create_from_db_record(record=record)
+            items.append(item)
+        return items
+        
     def created_at_friendly(self):
         return self.created_at.strftime('%m/%d/%Y')
         
@@ -82,54 +90,35 @@ class Item(object):
         
     @classmethod
     def find_all_new(cls):   
-        items = []
+        return Item.create_from_db_results(
+                                            MySQL().query(
+                                                          SQLBuilder.getItem(
+                                                          where="WHERE item.kind = 'New'")))
         
-        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'New'"))
-        
-        for record in results:
-            item = Item.create_from_DB_record(record=record)
-            items.append(item)
-        
-        return items
         
         
     @classmethod
     def find_all_action(cls):
-        items = []
-        
-        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'Action'"))
-        
-        for record in results:
-            item = Item.create_from_DB_record(record=record)
-            items.append(item)
-        
-        return items
+        return Item.create_from_db_results(
+                                            MySQL().query(
+                                                          SQLBuilder.getItem(
+                                                          where="WHERE item.kind = 'Action'")))
  
     
     @classmethod
     def find_all_hold(cls):
-        items = []
-        
-        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'Hold'"))
-        
-        for record in results:
-            item = Item.create_from_DB_record(record=record)
-            items.append(item)
-        
-        return items
+        return Item.create_from_db_results(
+                                            MySQL().query(
+                                                          SQLBuilder.getItem(
+                                                          where="WHERE item.kind = 'Hold'")))
 
     
     @classmethod
     def find_all_completed(cls):
-        items = []
-        
-        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'Completed'"))
-        
-        for record in results:
-            item = Item.create_from_DB_record(record=record)
-            items.append(item)
-        
-        return items
+        return Item.create_from_db_results(
+                                            MySQL().query(
+                                                          SQLBuilder.getItem(
+                                                          where="WHERE item.kind = 'Completed'")))
         
         
 class Message(object):
