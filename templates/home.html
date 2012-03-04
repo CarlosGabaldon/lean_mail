@@ -18,8 +18,8 @@
 {% end %}
 
 {% block action %}
-  <h3>Action ({{ len(hold_items) }})</h3>
-  {% for item in hold_items %}
+  <h3>Action ({{ len(action_items) }})</h3>
+  {% for item in action_items %}
     {{ modules.Item(item) }}
   {% end %}
 {% end %}

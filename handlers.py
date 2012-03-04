@@ -41,9 +41,9 @@ class Application(tornado.web.Application):
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         inbox_items = models.Item.find_all_new()
-        action_items = models.Item.find_all_new() #models.Item.find_all_action()
-        hold_items = models.Item.find_all_new() #models.Item.find_all_hold()
-        completed_items = models.Item.find_all_new() #models.Item.find_all_completed()
+        action_items = models.Item.find_all_action()
+        hold_items = models.Item.find_all_hold()
+        completed_items = models.Item.find_all_completed()
         
         self.render("home.html", 
                     inbox_items=inbox_items,

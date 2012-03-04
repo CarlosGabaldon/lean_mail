@@ -25,7 +25,7 @@ import MySQLdb
 
 class MySQL(object):
     
-    def execute_query(self, sql):
+    def query(self, sql):
         try:
             db = MySQLdb.connect("localhost","root","","lean_mail" )
             cursor = db.cursor()
@@ -34,24 +34,45 @@ class MySQL(object):
 
         except Exception, e: # in 3.1; except Exception as e:
             print e
-
-        db.close()
+            
+        finally:
+            db.close()
 
 
 
 class Item(object):
     """Item"""
-    def __init__(self, id, kind,
-                 created_at,
-                 updated_at,
-                 message,
-                 related_messages = None):
-        self.id = id,
-        self.kind = kind
-        self.message = message
-        self.related_messages = related_messages
-        self.created_at = created_at
-        self.updated_at = updated_at
+    def __init__(self, 
+                id, 
+                kind,
+                created_at,
+                updated_at,
+                message,
+                related_messages = None):
+            self.id = id,
+            self.kind = kind
+            self.message = message
+            self.related_messages = related_messages
+            self.created_at = created_at
+            self.updated_at = updated_at
+    
+    @classmethod
+    def create_from_DB_record(cls, record):
+        return Item(id=record[0], 
+                    kind=record[1],
+                    created_at=record[2],
+                    updated_at=record[3],
+                    message= Message(id=record[4],
+                                     sender=record[5],
+                                     to=record[6],
+                                     subject=record[7],
+                                     body=record[8],
+                                     sent_on=record[9],
+                                     created_at=record[10],
+                                     updated_at=record[11],
+                                     cc=record[12],
+                                     bc=record[13],
+                                     headers=record[14]))
 
     def created_at_friendly(self):
         return self.created_at.strftime('%m/%d/%Y')
@@ -60,46 +81,13 @@ class Item(object):
         return self.updated_at.strftime('%m/%d/%Y')
         
     @classmethod
-    def find_all_new(cls):
-        sql = """select item.id, 
-                        item.kind, 
-                        item.created_at,
-                        item.updated_at,
-                        message.id as message_id,
-                        message.sender as message_sender, 
-                        message.sent_to as message_sent_to,
-                        message.subject as message_subject,
-                        message.body as message_body,
-                        message.sent_on as sent_on,
-                        message.created_at as message_created_at,
-                        message.updated_at as message_updated_at,
-                        message.cc as message_cc,
-                        message.bc as message_bc,
-                        message.headers as message_headers
-                FROM item 
-                INNER JOIN  message ON item.id = message.item_id 
-                WHERE item.kind = 'New'
-                ORDER BY item.updated_at;"""
-                
+    def find_all_new(cls):   
         items = []
         
-        results = MySQL().execute_query(sql=sql)
-        for col in results:
-            item = Item(id=col[0], 
-                        kind=col[1],
-                        created_at=col[2],
-                        updated_at=col[3],
-                        message= Message(id=col[4],
-                                         sender=col[5],
-                                         to=col[6],
-                                         subject=col[7],
-                                         body=col[8],
-                                         sent_on=col[9],
-                                         created_at=col[10],
-                                         updated_at=col[11],
-                                         cc=col[12],
-                                         bc=col[13],
-                                         headers=col[14]))
+        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'New'"))
+        
+        for record in results:
+            item = Item.create_from_DB_record(record=record)
             items.append(item)
         
         return items
@@ -107,74 +95,41 @@ class Item(object):
         
     @classmethod
     def find_all_action(cls):
-        m1 = Message(sender="Lisa Gabaldon",
-                    subject="AT&T Bill",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m2 = Message(sender="Carlos Gabaldon",
-                    subject="Lean Mail",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m3 = Message(sender="Hacker Monthly",
-                    subject="Hacker Monthly Digital Subscription: Issue #21 - February 2012",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-                    
-        items = [ Item(kind="Action",message=m1),
-                  Item(kind="Action",message=m2),
-                  Item(kind="Action",message=m3) ]
+        items = []
+        
+        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'Action'"))
+        
+        for record in results:
+            item = Item.create_from_DB_record(record=record)
+            items.append(item)
         
         return items
  
     
     @classmethod
     def find_all_hold(cls):
-        m1 = Message(sender="Zappos.com",
-                    subject="Your Shipping Confirmation",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m2 = Message(sender="GitHub",
-                    subject="Wiki Created",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-                    
-        items = [ Item(kind="Hold",message=m1),
-                  Item(kind="Hold",message=m2) ]
+        items = []
+        
+        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'Hold'"))
+        
+        for record in results:
+            item = Item.create_from_DB_record(record=record)
+            items.append(item)
         
         return items
 
     
     @classmethod
     def find_all_completed(cls):
-        m1 = Message(sender="service@paypal.com",
-                    subject="Receipt for Your Payment to UnifiedRegistrar",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m2 = Message(sender="Namecheap Support",
-                    subject="Welcome to Namecheap.com",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m3 = Message(sender="Google Offers",
-                    subject="Overstock.com | Phoenix",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m4 = Message(sender="PhotoBotos.com",
-                    subject="[New post] Death Valley Racetrack",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-        m5 = Message(sender="Dwell",
-                    subject="This week from Dwell.",
-                    to="cgabaldon@gmail.com",
-                    body="Body..")
-                    
-        items = [ Item(kind="Completed",message=m1),
-                  Item(kind="Completed",message=m2),
-                  Item(kind="Completed",message=m3),
-                  Item(kind="Completed",message=m4), 
-                  Item(kind="Completed",message=m5) ]
+        items = []
+        
+        results = MySQL().query(SQLBuilder.getItem(where="WHERE item.kind = 'Completed'"))
+        
+        for record in results:
+            item = Item.create_from_DB_record(record=record)
+            items.append(item)
         
         return items
-
         
         
 class Message(object):
@@ -206,6 +161,29 @@ class Message(object):
     def sent_on_friendly(self):
         return self.sent_on.strftime('%m/%d/%Y')
 
+
+class SQLBuilder(object):
+    @classmethod
+    def getItem(cls, where):
+        return """select item.id, 
+                        item.kind, 
+                        item.created_at,
+                        item.updated_at,
+                        message.id as message_id,
+                        message.sender as message_sender, 
+                        message.sent_to as message_sent_to,
+                        message.subject as message_subject,
+                        message.body as message_body,
+                        message.sent_on as sent_on,
+                        message.created_at as message_created_at,
+                        message.updated_at as message_updated_at,
+                        message.cc as message_cc,
+                        message.bc as message_bc,
+                        message.headers as message_headers
+                FROM item 
+                INNER JOIN  message ON item.id = message.item_id 
+                %s
+                ORDER BY item.updated_at;""" % (where)
 
 
 if __name__ == '__main__':
