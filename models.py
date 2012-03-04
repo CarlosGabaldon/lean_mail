@@ -23,11 +23,11 @@ Created by Carlos Gabaldon on 2012-02-21.
 from datetime import datetime
 import MySQLdb
 
-class Model(object):
+class MySQL(object):
     
-    def execute_query(sql):
+    def execute_query(self, sql):
         try:
-            db = MySQLdb.connect("localhost","root","","Glaze" )
+            db = MySQLdb.connect("localhost","root","","lean_mail" )
             cursor = db.cursor()
             cursor.execute(sql)
             return cursor.fetchall()
@@ -39,7 +39,7 @@ class Model(object):
 
 
 
-class Item(Model):
+class Item(object):
     """Item"""
     def __init__(self, id, kind,
                  created_at,
@@ -82,7 +82,8 @@ class Item(Model):
                 ORDER BY item.updated_at;"""
                 
         items = []
-        results = self.execute_query(sql=sql)
+        
+        results = MySQL().execute_query(sql=sql)
         for col in results:
             item = Item(id=col[0], 
                         kind=col[1],
@@ -176,7 +177,7 @@ class Item(Model):
 
         
         
-class Message(Model):
+class Message(object):
     """Message"""
     def __init__(self, 
                 id,
