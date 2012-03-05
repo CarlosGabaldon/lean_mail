@@ -38,7 +38,7 @@ class Application(tornado.web.Application):
 
         tornado.web.Application.__init__(self, urls.handlers, **app.settings)
 
-class MainHandler(tornado.web.RequestHandler):
+class HomeHandler(tornado.web.RequestHandler):
     def get(self):
         inbox_items = models.Item.find_all_new()
         action_items = models.Item.find_all_action()

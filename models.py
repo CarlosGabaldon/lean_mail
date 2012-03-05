@@ -91,34 +91,34 @@ class Item(object):
     @classmethod
     def find_all_new(cls):   
         return Item.create_from_db_results(
-                                            MySQL().query(
-                                                          SQLBuilder.getItem(
-                                                          where="WHERE item.kind = 'New'")))
+                                    MySQL().query(
+                                            SQLBuilder.getItem(
+                                                where="WHERE item.kind = 'New'")))
         
         
         
     @classmethod
     def find_all_action(cls):
         return Item.create_from_db_results(
-                                            MySQL().query(
-                                                          SQLBuilder.getItem(
-                                                          where="WHERE item.kind = 'Action'")))
+                                    MySQL().query(
+                                            SQLBuilder.getItem(
+                                                where="WHERE item.kind = 'Action'")))
  
     
     @classmethod
     def find_all_hold(cls):
         return Item.create_from_db_results(
-                                            MySQL().query(
-                                                          SQLBuilder.getItem(
-                                                          where="WHERE item.kind = 'Hold'")))
+                                    MySQL().query(
+                                            SQLBuilder.getItem(
+                                                where="WHERE item.kind = 'Hold'")))
 
     
     @classmethod
     def find_all_completed(cls):
         return Item.create_from_db_results(
-                                            MySQL().query(
-                                                          SQLBuilder.getItem(
-                                                          where="WHERE item.kind = 'Completed'")))
+                                    MySQL().query(
+                                            SQLBuilder.getItem(
+                                                where="WHERE item.kind = 'Completed'")))
         
         
 class Message(object):

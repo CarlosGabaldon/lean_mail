@@ -1,5 +1,5 @@
-from handlers import MainHandler
+from handlers import HomeHandler
 
 handlers = [
-    (r"/", MainHandler),
+    (r"/", HomeHandler),
 ]
