@@ -8,7 +8,7 @@
   project repo: git://github.com/CarlosGabaldon/lean_mail.git
  
   Lean Mail Client:
-  SQLite:     http://www.sqlite.org/
+  MySQL:      http://www.mysql.com/products/community/
   Tornado:    http://www.tornadoweb.org/
               http://carlosgabaldon.com/articles/storm-chasing-tornado/
   
@@ -22,18 +22,23 @@
    $ cd ./tornado/
    $ python setup.py build
    $ sudo python setup.py install
+   $ cd
 
-== SQLITE 
-  $ wget http://www.sqlite.org/sqlite-3.5.4.tar.gz
-  $ tar xvfz sqlite-3.5.4.tar.gz
-  $ cd sqlite-3.5.4
-  $ ./configure --prefix=/usr/local
-  $ make
-  $ sudo make install
+== MYSQL 
+
+  $ sudo apt-get install mysql-server
+  $ cd
+
+== LEAN MAIL
+
+  $ git clone https://CarlosGabaldon@github.com/CarlosGabaldon/lean_mail.git
+  $ cd ./lean_mail/data/
+  $ mysql -u root < schema.sql
+  $ cd 
 
 = RUN
 
-  $ cd lean_mail
+  $ cd ./lean_mail
   $ python handlers.py
 
 
