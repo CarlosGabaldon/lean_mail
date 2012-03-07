@@ -88,6 +88,9 @@ class Item(object):
     def updated_at_friendly(self):
         return self.updated_at.strftime('%m/%d/%Y')
         
+    def permalink(self):
+        return "_".join([str(self.id[0]), self.kind]).lower()
+        
     @classmethod
     def find_all_new(cls):   
         return Item.create_from_db_results(
