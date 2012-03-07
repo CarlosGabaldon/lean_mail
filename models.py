@@ -22,12 +22,13 @@ Created by Carlos Gabaldon on 2012-02-21.
 
 from datetime import datetime
 import MySQLdb
+import config
 
 class MySQL(object):
     
     def query(self, sql):
         try:
-            db = MySQLdb.connect("localhost","root","","lean_mail" )
+            db = MySQLdb.connect(config.db_host, config.db_user, config.db_password, config.db_name)
             cursor = db.cursor()
             cursor.execute(sql)
             return cursor.fetchall()

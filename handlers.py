@@ -27,7 +27,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.httpserver
 import models
-import app
+import config
 import urls
 
 
@@ -36,7 +36,7 @@ from tornado.options import options
 class Application(tornado.web.Application):
     def __init__(self):
 
-        tornado.web.Application.__init__(self, urls.handlers, **app.settings)
+        tornado.web.Application.__init__(self, urls.handlers, **config.settings)
 
 class HomeHandler(tornado.web.RequestHandler):
     def get(self):
