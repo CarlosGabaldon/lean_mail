@@ -28,7 +28,10 @@ class MySQL(object):
     
     def query(self, sql):
         try:
-            db = MySQLdb.connect(config.db_host, config.db_user, config.db_password, config.db_name)
+            db = MySQLdb.connect(config.db_host, 
+                                 config.db_user, 
+                                 config.db_password, 
+                                 config.db_name)
             cursor = db.cursor()
             cursor.execute(sql)
             return cursor.fetchall()
