@@ -1,17 +1,17 @@
 <article>
   <header>
-    <h2><a href="/item/{{item.permalink()}}">{{item.message.sender}}</a> 
+    <h2><a href="/item/{{item.id}}">{{item.sent_by}}</a> 
     <span>
-      <time datetime="{{item.message.sent_on}}">{{item.message.sent_on_friendly()}}</time>
+      <time datetime="{{item.sent_on}}">{{ locale.format_date(item.sent_on, full_format=True, shorter=True) }}</time>
     </span>
     </h2>
   </header>
   <p>
-   {{item.message.subject}}
+   {{item.subject}}
   </p>
   {% if display_detail %}
   <p>
-   {{item.message.body}}
+   {{item.body}}
   </p>
   {% end %}
 </article>

@@ -26,24 +26,38 @@ http://0.0.0.0:8888/
 import tornado.ioloop
 import tornado.web
 import tornado.httpserver
-import models
 import config
 import urls
+import tornado.database
 
 
 from tornado.options import options
         
 class Application(tornado.web.Application):
     def __init__(self):
-
+        
         tornado.web.Application.__init__(self, urls.handlers, **config.settings)
+        
+        self.db = tornado.database.Connection(
+            host="localhost", database="lean_mail",
+            user="root", password="")
 
-class HomeHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
+    @property
+    def db(self):
+        return self.application.db
+
+
+class HomeHandler(BaseHandler):
     def get(self):
-        inbox_items = models.Item.find_all_new()
-        action_items = models.Item.find_all_action()
-        hold_items = models.Item.find_all_hold()
-        completed_items = models.Item.find_all_completed()
+        sql= """select * from item 
+                INNER JOIN  message ON item.id = message.item_id 
+                where item.kind = %s order by item.updated_at;""" 
+        
+        inbox_items = self.db.query(sql, "New")
+        action_items = self.db.query(sql, "Action")
+        hold_items = self.db.query(sql, "Hold")
+        completed_items = self.db.query(sql, "Completed")
         
         self.render("home.html", 
                     inbox_items=inbox_items,
@@ -51,9 +65,13 @@ class HomeHandler(tornado.web.RequestHandler):
                     hold_items=hold_items,
                     completed_items=completed_items)
 
-class ItemHandler(tornado.web.RequestHandler):
+class ItemHandler(BaseHandler):
     def get(self, id):
-        item = models.Item.find_by_id(id=id)
+        sql= """select * from item 
+                INNER JOIN  message ON item.id = message.item_id 
+                where item.id = %s order by item.updated_at;""" 
+        
+        item = self.db.get(sql, int(id))
         
         self.render("item.html",
                     item=item)

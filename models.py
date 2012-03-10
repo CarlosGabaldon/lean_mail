@@ -18,6 +18,8 @@ models.py
 
 Created by Carlos Gabaldon on 2012-02-21.
 
+********************  Deprecated to use tornado.database instead **********************
+
 """
 
 from datetime import datetime
