@@ -38,9 +38,10 @@ class Application(tornado.web.Application):
         
         tornado.web.Application.__init__(self, urls.handlers, **config.settings)
         
+        # Global connection to the DB across all handlers
         self.db = tornado.database.Connection(
-            host="localhost", database="lean_mail",
-            user="root", password="")
+            host=options.mysql_host, database=options.mysql_database,
+            user=options.mysql_user, password=options.mysql_password)
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
