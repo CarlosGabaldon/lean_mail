@@ -90,13 +90,20 @@ class Item(object):
         return self.updated_at.strftime('%m/%d/%Y')
         
     def permalink(self):
-        return "_".join([str(self.id[0]), self.kind]).lower()
+        #return "_".join([str(self.id[0]), self.kind]).lower()
+        return str(self.id[0])
+    @classmethod
+    def find_by_id(cls, id):
+        return Item.create_from_db_results(
+                                    MySQL().query(
+                                            SQLBuilder.get_item(
+                                                where="WHERE item.id=%s" % id)))[0]
         
     @classmethod
     def find_all_new(cls):   
         return Item.create_from_db_results(
                                     MySQL().query(
-                                            SQLBuilder.getItem(
+                                            SQLBuilder.get_item(
                                                 where="WHERE item.kind = 'New'")))
         
         
@@ -105,7 +112,7 @@ class Item(object):
     def find_all_action(cls):
         return Item.create_from_db_results(
                                     MySQL().query(
-                                            SQLBuilder.getItem(
+                                            SQLBuilder.get_item(
                                                 where="WHERE item.kind = 'Action'")))
  
     
@@ -113,7 +120,7 @@ class Item(object):
     def find_all_hold(cls):
         return Item.create_from_db_results(
                                     MySQL().query(
-                                            SQLBuilder.getItem(
+                                            SQLBuilder.get_item(
                                                 where="WHERE item.kind = 'Hold'")))
 
     
@@ -121,7 +128,7 @@ class Item(object):
     def find_all_completed(cls):
         return Item.create_from_db_results(
                                     MySQL().query(
-                                            SQLBuilder.getItem(
+                                            SQLBuilder.get_item(
                                                 where="WHERE item.kind = 'Completed'")))
         
         
@@ -157,7 +164,7 @@ class Message(object):
 
 class SQLBuilder(object):
     @classmethod
-    def getItem(cls, where):
+    def get_item(cls, where):
         return """select item.id, 
                         item.kind, 
                         item.created_at,

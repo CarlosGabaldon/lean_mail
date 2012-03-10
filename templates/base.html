@@ -11,30 +11,7 @@
   {% block header %}{% end %}
 </div>
 
-<div class="colmask threecol">
-	<div class="colmid">
-		<div class="colleft">
-			<div class="col1">
-				<!-- Column 1 start -->
-				{% block action %}{% end %}
-				<hr>
-				{% block hold %}{% end %}
-        
-				<!-- Column 1 end -->
-			</div>
-			<div class="col2">
-				<!-- Column 2 start -->
-        {% block inbox %}{% end %}
-				<!-- Column 2 end -->
-			</div>
-			<div class="col3">
-				<!-- Column 3 start -->
-				{% block done %}{% end %}
-				<!-- Column 3 end -->
-			</div>
-		</div>
-	</div>
-</div>
+{% block content %}{% end %}
 
 <div id="footer">
 {% block footer %}{% end %}

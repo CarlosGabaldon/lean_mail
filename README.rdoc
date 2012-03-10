@@ -6,7 +6,7 @@
  
   project page: http://github.com/CarlosGabaldon/lean_mail/
   project repo: git://github.com/CarlosGabaldon/lean_mail.git
- 
+  
   Lean Mail Client:
   MySQL:      http://www.mysql.com/products/community/
   Tornado:    http://www.tornadoweb.org/
@@ -28,6 +28,12 @@
 
   $ sudo apt-get install mysql-server
   $ cd
+  $ curl -O http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz#md5=7df2a529a074f613b509fb44feefe74e
+  $ tar xzvf setuptools-0.6c11.tar.gz
+  $ cd ./setuptools-0.6c11.tar.gz
+  $ setup.py install
+  $ easy_install-2.7 pip
+  $ pip-2.7 install MySQL-python
 
 == LEAN MAIL
 

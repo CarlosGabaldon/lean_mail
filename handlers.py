@@ -51,6 +51,12 @@ class HomeHandler(tornado.web.RequestHandler):
                     hold_items=hold_items,
                     completed_items=completed_items)
 
+class ItemHandler(tornado.web.RequestHandler):
+    def get(self, id):
+        item = models.Item.find_by_id(id=id)
+        
+        self.render("item.html",
+                    item=item)
 
 def main():
     tornado.options.parse_command_line()

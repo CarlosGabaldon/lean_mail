@@ -9,34 +9,43 @@
 	</ul>
 {% end %}
 
-
-{% block inbox %}
-  <h3>Inbox ({{ len(inbox_items) }})</h3>
-  {% for item in inbox_items %}
-    {{ modules.Item(item) }}
-  {% end %}
-{% end %}
-
-{% block action %}
-  <h3>Action ({{ len(action_items) }})</h3>
-  {% for item in action_items %}
-    {{ modules.Item(item) }}
-  {% end %}
-{% end %}
-
-
-{% block hold %}
-  <h3>Hold ({{ len(hold_items) }})</h3>
-  {% for item in hold_items %}
-    {{ modules.Item(item) }}
-  {% end %}
-{% end %}
-
-{% block done %}
-  <h3>Done ({{ len(completed_items) }})</h3>
-  {% for item in completed_items %}
-    {{ modules.Item(item) }}
-  {% end %}
+{% block content %}
+<div class="colmask threecol">
+	<div class="colmid">
+		<div class="colleft">
+			<div class="col1">
+				<!-- Column 1 start -->
+				<h3>Action ({{ len(action_items) }})</h3>
+        {% for item in action_items %}
+          {{ modules.Item(item) }}
+        {% end %}
+				<hr>
+				<h3>Hold ({{ len(hold_items) }})</h3>
+        {% for item in hold_items %}
+          {{ modules.Item(item) }}
+        {% end %}
+        
+				<!-- Column 1 end -->
+			</div>
+			<div class="col2">
+				<!-- Column 2 start -->
+        <h3>Inbox ({{ len(inbox_items) }})</h3>
+        {% for item in inbox_items %}
+          {{ modules.Item(item) }}
+        {% end %}
+				<!-- Column 2 end -->
+			</div>
+			<div class="col3">
+				<!-- Column 3 start -->
+				<h3>Done ({{ len(completed_items) }})</h3>
+        {% for item in completed_items %}
+          {{ modules.Item(item) }}
+        {% end %}
+				<!-- Column 3 end -->
+			</div>
+		</div>
+	</div>
+</div>
 {% end %}
 
 

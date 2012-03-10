@@ -9,4 +9,9 @@
   <p>
    {{item.message.subject}}
   </p>
+  {% if display_detail %}
+  <p>
+   {{item.message.body}}
+  </p>
+  {% end %}
 </article>
