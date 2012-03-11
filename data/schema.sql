@@ -6,7 +6,7 @@ use lean_mail;
 
 CREATE TABLE item (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  kind VARCHAR(20),
+  state VARCHAR(20),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT NULL
 );
@@ -28,7 +28,7 @@ CREATE TABLE message (
 
 
 ################################# ADD NEW ITEMS ##############################
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("New");
 
 # Add message 1
@@ -58,7 +58,7 @@ We hope you love your glasses and want to thank you for helping give the gift of
 "
 , "", "", "", NOW());
 
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("New");
 
 
@@ -68,7 +68,7 @@ VALUES(LAST_INSERT_ID(), "Mint.com", "cgabaldon@gmail.com", "Your tax refund has
 
 
 # Add item 3
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("New");
 
 # Add message 3
@@ -76,7 +76,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Dwell", "cgabaldon@gmail.com", "This week from Dwell.", "Body..", "", "", "", NOW());
 
 # Add item 4
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("New");
 
 # Add message 4
@@ -84,7 +84,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com", "Amazon Instant Video: New Releases and the Weekend Movie Sale", "Body..", "", "", "",  NOW());
 
 # Add item 5
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("New");
 
 # Add message 5
@@ -93,7 +93,7 @@ VALUES(LAST_INSERT_ID(), "Warby Parker", "cgabaldon@gmail.com", "Your Warby Park
 
 
 ################################# ADD ACTION ITEMS ##############################
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Action");
 
 
@@ -103,7 +103,7 @@ VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com", "New Deals", "Body
 
 
 # Add item 2
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Action");
 
 # Add message 2
@@ -111,7 +111,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Dwell", "cgabaldon@gmail.com", "This week from Dwell.", "Body..", "", "", "", NOW());
 
 # Add item 3
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Action");
 
 # Add message 3
@@ -121,7 +121,7 @@ VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com", "Amazon Instant Vi
 
 
 ################################# ADD HOLD ITEMS ##############################
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Hold");
 
 
@@ -131,7 +131,7 @@ VALUES(LAST_INSERT_ID(), "Groupon", "cgabaldon@gmail.com", "50% off at the Potat
 
 
 # Add item 2
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Hold");
 
 # Add message 2
@@ -139,7 +139,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Amazon Local", "cgabaldon@gmail.com", "New this week", "Body..", "", "", "", NOW());
 
 # Add item 3
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Hold");
 
 # Add message 3
@@ -147,7 +147,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com", "Amazon Instant Video: New Releases and the Weekend Movie Sale", "Body..", "", "", "",  NOW());
 
 # Add item 4
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Hold");
 
 # Add message 4
@@ -155,7 +155,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Warby Parker", "cgabaldon@gmail.com", "We have shipped your glasses.", "Body..", "", "", "", NOW());
 
 # Add item 5
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Hold");
 
 # Add message 5
@@ -164,7 +164,7 @@ VALUES(LAST_INSERT_ID(), "Warby Parker", "cgabaldon@gmail.com", "Your Warby Park
 
 
 ################################# ADD COMPLETED ITEMS ##############################
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Completed");
 
 
@@ -174,7 +174,7 @@ VALUES(LAST_INSERT_ID(), "Mint.com", "cgabaldon@gmail.com", "Your tax refund has
 
 
 # Add item 2
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Completed");
 
 # Add message 2
@@ -182,7 +182,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Dwell", "cgabaldon@gmail.com", "This week from Dwell.", "Body..", "", "", "", NOW());
 
 # Add item 3
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Completed");
 
 # Add message 3
@@ -190,7 +190,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com", "Amazon Instant Video: New Releases and the Weekend Movie Sale", "Body..", "", "", "",  NOW());
 
 # Add item 4
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Completed");
 
 # Add message 4
@@ -199,7 +199,7 @@ VALUES(LAST_INSERT_ID(), "Warby Parker", "cgabaldon@gmail.com", "Your Warby Park
 
 
 # Add item 5
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Completed");
 
 # Add message 5
@@ -207,7 +207,7 @@ INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, s
 VALUES(LAST_INSERT_ID(), "Amazon.com", "cgabaldon@gmail.com", "Amazon Instant Video: New Releases and the Weekend Movie Sale", "Body..", "", "", "",  NOW());
 
 # Add item 6
-INSERT INTO item (kind)
+INSERT INTO item (state)
 VALUES ("Completed");
 
 # Add message 6

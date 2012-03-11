@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
 {% block header %}
+ 
   <h1>Kanban Mail</h1>
+   <!-- 
 	<ul>
 		<li><a href="/action" class="active"><span>Action</span></a></li>
 		<li><a href="/hold"><span>Hold</span></a></li>
 		<li><a href="/done"><span>Done</span></a></li>
 	</ul>
+	-->
 {% end %}
 
 {% block content %}
@@ -15,12 +18,12 @@
 		<div class="colleft">
 			<div class="col1">
 				<!-- Column 1 start -->
-				<h3>Action ({{ len(action_items) }})</h3>
+				<h2>Action ({{ len(action_items) }})</h2>
         {% for item in action_items %}
           {{ modules.Item(item) }}
         {% end %}
 				<hr>
-				<h3>Hold ({{ len(hold_items) }})</h3>
+				<h2>Hold ({{ len(hold_items) }})</h2>
         {% for item in hold_items %}
           {{ modules.Item(item) }}
         {% end %}
@@ -29,7 +32,7 @@
 			</div>
 			<div class="col2">
 				<!-- Column 2 start -->
-        <h3>Inbox ({{ len(inbox_items) }})</h3>
+        <h2>Inbox ({{ len(inbox_items) }})</h2>
         {% for item in inbox_items %}
           {{ modules.Item(item) }}
         {% end %}
@@ -37,7 +40,7 @@
 			</div>
 			<div class="col3">
 				<!-- Column 3 start -->
-				<h3>Done ({{ len(completed_items) }})</h3>
+				<h2>Done ({{ len(completed_items) }})</h2>
         {% for item in completed_items %}
           {{ modules.Item(item) }}
         {% end %}

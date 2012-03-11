@@ -2,17 +2,21 @@
 
 {% block header %}
   <h1>Kanban Mail</h1>
+  <!--
 	<ul>
 		<li><a href="/action" class="active"><span>Action</span></a></li>
 		<li><a href="/hold"><span>Hold</span></a></li>
 		<li><a href="/done"><span>Done</span></a></li>
 	</ul>
+	-->
 {% end %}
 
 
 {% block content %}
 
-{{ modules.Item(item, True) }}
+{{ modules.Item(item, True, item_states) }}
+
+<a href='/'><< back</a>
 
 {% end %}
 

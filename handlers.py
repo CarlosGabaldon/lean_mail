@@ -53,7 +53,7 @@ class HomeHandler(BaseHandler):
     def get(self):
         sql= """select * from item 
                 INNER JOIN  message ON item.id = message.item_id 
-                where item.kind = %s order by item.updated_at;""" 
+                where item.state = %s order by item.updated_at;""" 
         
         inbox_items = self.db.query(sql, "New")
         action_items = self.db.query(sql, "Action")
@@ -74,8 +74,18 @@ class ItemHandler(BaseHandler):
         
         item = self.db.get(sql, int(id))
         
+        item_states = ["New", "Action", "Hold", "Completed"]
+        
         self.render("item.html",
-                    item=item)
+                    item=item,
+                    item_states=item_states)
+                    
+    def post(self, id):
+        item_state = self.get_argument("item_state")
+        sql= """ update item 
+                 SET state = %s WHERE id = %s"""
+        self.db.execute(sql, item_state, id)
+        self.redirect("/")
 
 def main():
     tornado.options.parse_command_line()
