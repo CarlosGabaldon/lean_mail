@@ -23,13 +23,16 @@ $ python handlers.py
 http://0.0.0.0:8888/
 
 """
+import imaplib
+import email
+import email.utils
 import tornado.ioloop
 import tornado.web
 import tornado.httpserver
+import tornado.database
+import imaplib
 import config
 import urls
-import tornado.database
-
 
 from tornado.options import options
         
@@ -86,6 +89,56 @@ class ItemHandler(BaseHandler):
                  SET state = %s WHERE id = %s"""
         self.db.execute(sql, item_state, id)
         self.redirect("/")
+
+class EmailHandler(BaseHandler):
+    def get(self):
+        
+        mail = imaplib.IMAP4_SSL(options.email_host)
+        
+        try:
+             # Login
+                mail.login(options.email_account, options.email_password)
+                mail.select(options.email_folder)
+
+                # Get raw email
+                result, data = mail.uid('search', None, "ALL")
+                latest_email_uid = data[0].split()[-1]
+                result, data = mail.uid('fetch', latest_email_uid, '(RFC822)')
+                raw_email = data[0][1]
+
+                # Parse raw email
+                message = email.message_from_string(raw_email)
+                maintype = message.get_content_maintype()
+
+                # Get body
+                body = ""
+                if maintype == 'multipart':
+                    for part in message.get_payload():
+                        if part.get_content_maintype() == 'text':
+                            body = part.get_payload()
+                elif maintype == 'text':
+                    body = message.get_payload()
+
+                # Parse rfc822 date
+                date = email.utils.parsedate_tz(message['Date'])
+                
+                # Save message to db
+                item_id = self.db.execute("INSERT INTO item (state) VALUES ('New');")
+
+                sql= """INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, sent_on)
+                        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+
+                self.db.execute(sql, item_id, message['From'], message['To'], message['Subject'], body,"", "", "", date )
+        
+        except Exception, e: # in 3.1; except Exception as e:
+            print e
+        
+        
+        finally:
+            mail.logout()
+            self.redirect("/")
+        
+
 
 def main():
     tornado.options.parse_command_line()
