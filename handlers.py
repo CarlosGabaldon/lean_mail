@@ -25,6 +25,7 @@ http://0.0.0.0:8888/
 """
 import imaplib
 import email
+import datetime
 import email.utils
 import tornado.ioloop
 import tornado.web
@@ -119,8 +120,9 @@ class EmailHandler(BaseHandler):
                 elif maintype == 'text':
                     body = message.get_payload()
 
-                # Parse rfc822 date
+                # Parse rfc822 date 
                 date = email.utils.parsedate_tz(message['Date'])
+                sent_on = datetime.datetime(*date[0:6]).strftime('%Y-%m-%d %H:%M:%S')
                 
                 # Save message to db
                 item_id = self.db.execute("INSERT INTO item (state) VALUES ('New');")
