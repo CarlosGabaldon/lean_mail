@@ -130,7 +130,7 @@ class EmailHandler(BaseHandler):
                 sql= """INSERT INTO message(item_id, sent_by, sent_to, subject, body, cc, bc, headers, sent_on)
                         VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
 
-                self.db.execute(sql, item_id, message['From'], message['To'], message['Subject'], body,"", "", "", date )
+                self.db.execute(sql, int(item_id), message['From'], message['To'], message['Subject'], body,"", "", "", sent_on )
         
         except Exception, e: # in 3.1; except Exception as e:
             print e

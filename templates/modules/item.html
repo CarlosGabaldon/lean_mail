@@ -1,17 +1,30 @@
 <article>
   <header>
-    <h2>
       {% if display_detail %}
-        {{ escape(item.sent_by) }}
+        <form action="{{ request.path }}" method="post">
+          <h2>Item:
+          <select name="item_state">
+              {% for state in item_states  %}
+                  {% if state == item.state %}
+                    <option value="{{ state }}" selected>{{ state }}</option>
+                  {% else %}
+                    <option value="{{ state }}">{{ state }}</option>
+                  {% end %}
+              {% end %}
+          </select>
+          <input type="submit" value="Move">
+          </h2>
+        </form>
+        <h2>{{ escape(item.sent_by) }}
       {% else %}
-        <a href="/item/{{item.id}}">{{ escape(item.sent_by) }}</a> 
+        <h2><a href="/item/{{item.id}}">{{ escape(item.sent_by) }}</a>
       {% end %}
-    <span>
-      <time datetime="{{item.sent_on}}">
-        {{ locale.format_date(item.sent_on, full_format=True, shorter=True) }}
-      </time>
-    </span>
-    </h2>
+        <span>
+          <time datetime="{{item.sent_on}}">
+            {{ locale.format_date(item.sent_on, full_format=True, shorter=True) }}
+          </time>
+        </span>
+      </h2>
   </header>
   <p>
    {{escape(item.subject)}}
@@ -19,22 +32,6 @@
   {% if display_detail %}
   <p>
    {{item.body}}
-  </p>
-  <p>
-    <form action="{{ request.path }}" method="post">
-      <h2>Move to:
-      <select name="item_state">
-          {% for state in item_states  %}
-              {% if state == item.state %}
-                <option value="{{ state }}" selected>{{ state }}</option>
-              {% else %}
-                <option value="{{ state }}">{{ state }}</option>
-              {% end %}
-          {% end %}
-      </select>
-      <input type="submit" value="Move">
-      </h2>
-    </form>
   </p>
   {% else %}
   <h3>{{ item.state }} item</h3>
