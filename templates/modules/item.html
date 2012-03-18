@@ -1,4 +1,4 @@
-<article>
+<article class="kanban">
   <header>
       {% if display_detail %}
         <form action="{{ request.path }}" method="post">
@@ -33,7 +33,5 @@
   <p>
    {{item.body}}
   </p>
-  {% else %}
-  <h3>{{ item.state }} item</h3>
   {% end %}
 </article>

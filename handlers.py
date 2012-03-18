@@ -105,6 +105,7 @@ class EmailHandler(BaseHandler):
                 result, data = mail.uid('search', None, "ALL")
                 latest_email_uid = data[0].split()[-1]
                 result, data = mail.uid('fetch', latest_email_uid, '(RFC822)')
+                # Get just one email for now..
                 raw_email = data[0][1]
 
                 # Parse raw email
