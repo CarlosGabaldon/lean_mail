@@ -32,8 +32,8 @@
 			</div>
 			<div class="col2">
 				<!-- Column 2 start -->
-        <h2>Inbox ({{ len(inbox_items) }})</h2>
-        {% for item in inbox_items %}
+        <h2>New ({{ len(new_items) }})</h2>
+        {% for item in new_items %}
           {{ modules.Item(item) }}
         {% end %}
 				<!-- Column 2 end -->

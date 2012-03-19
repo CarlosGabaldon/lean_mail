@@ -59,13 +59,13 @@ class HomeHandler(BaseHandler):
                 INNER JOIN  message ON item.id = message.item_id 
                 where item.state = %s order by item.updated_at;""" 
         
-        inbox_items = self.db.query(sql, "New")
+        new_items = self.db.query(sql, "New")
         action_items = self.db.query(sql, "Action")
         hold_items = self.db.query(sql, "Hold")
         completed_items = self.db.query(sql, "Completed")
         
         self.render("home.html", 
-                    inbox_items=inbox_items,
+                    new_items=new_items,
                     action_items=action_items,
                     hold_items=hold_items,
                     completed_items=completed_items)

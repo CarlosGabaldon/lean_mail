@@ -41,10 +41,14 @@
   $ cd ./lean_mail/data/
   $ mysql -u root < schema.sql
   $ cd 
+  
+== TESTS
+
+  $ cd ./lean_mail
+  $ python runtests.py 
 
 = RUN
 
-  $ cd ./lean_mail
   $ python handlers.py
 
 
